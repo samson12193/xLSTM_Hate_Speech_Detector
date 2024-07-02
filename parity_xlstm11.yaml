@@ -1,0 +1,40 @@
+training:
+  batch_size: 256
+  lr: 3e-4
+  seed: 42
+  val_every_step: 50
+  lr_warmup_steps: 1000
+  lr_decay_until_steps: ${.num_steps}
+  lr_decay_factor: 0.001
+  weight_decay: 0.1
+  num_pre_steps: 80
+  num_steps: 20000
+  device: cuda
+  amp_precision: bfloat16
+  weight_precision: float32
+  enable_mixed_precision: true
+
+model:
+  num_blocks: 6
+  embedding_dim: 64
+  mlstm_block:
+    mlstm:
+      num_heads: 2
+  slstm_block:
+    slstm:
+      backend: vanilla
+      num_heads: 1
+  slstm_at: [1]
+  feedforward:
+    proj_factor: 1.3
+    act_fn: gelu
+
+  vocab_size: 50257
+  
+  
+  schedul: 
+    first: 64
+    quarter: 128
+    half: 150
+    three_quarters: 256
+
